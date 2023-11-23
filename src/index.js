@@ -1,5 +1,5 @@
 // !==================IMPORT====================
-import { requestOnColechtion } from './partials/example';
+import { requestOnColechtion } from './example';
 // !==================IMPORT====================
 
 // @==================LINK======================
