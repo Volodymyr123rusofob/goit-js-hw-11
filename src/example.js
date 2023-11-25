@@ -1,19 +1,21 @@
 import axios from 'axios';
-const URL = 'https://pixabay.com/api/';
-const KEY = '40816428-8ff543c0077c3bf6c3247c305';
+export class RequestOnColechtion {
+  #URL = 'https://pixabay.com/api/';
+  #KEY = '40816428-8ff543c0077c3bf6c3247c305';
+  #params = new URLSearchParams({
+    key: `${this.#KEY}`,
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: true,
+  });
 
-export async function requestOnColechtion(value) {
-  try {
-    return await axios.get(`${URL}`, {
-      params: {
-        key: `${KEY}`,
-        q: `${value}`,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-      },
-    });
-  } catch (error) {
-    console.error(error.message);
+  async requestColechtion(value) {
+    const url = `${this.#URL}?${this.#params}&q=${value}`;
+    try {
+      const { data } = await axios(url);
+      return data;
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 }

@@ -1,41 +1,54 @@
-// !==================IMPORT====================
-import { requestOnColechtion } from './example';
-// !==================IMPORT====================
+import { RequestOnColechtion } from './example';
+import { Notify } from 'notiflix';
 
-// @==================LINK======================
 const divGallery = document.querySelector('.gallery');
 const formSerch = document.querySelector('.search-form');
-// @==================LINK======================
-// %========================================Const, function,....=====================================
+const api = new RequestOnColechtion();
 
-// %========================================Const, function,....=====================================
-// $================LISTENER==================
 formSerch.addEventListener('submit', e => {
   e.preventDefault();
   const userValue = e.target[0].value;
-  requestOnColechtion(userValue).then(data => {
-    const arrBek = data.data.hits;
-    const galleryRender = [];
-    arrBek.forEach(e => {
-      galleryRender.push(`<div class="photo-card">
-  <img src="${e.webformatURL}" alt="${e.tags}" loading="lazy" />
+  if (!userValue) return Notify.warning('EThe field must not be empty');
+  api.requestColechtion(userValue).then(data => {
+    const arrBek = data.hits;
+    if (arrBek.length === 0)
+      return Notify.info(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+    renderImg(arrBek);
+  });
+  e.target[0].value = '';
+});
+
+function renderImg(arr) {
+  const galleryRender = [];
+  arr.forEach(e => {
+    const {
+      webformatURL,
+      tags,
+      likes,
+      views,
+      comments,
+      downloads,
+      largeImageURL,
+    } = e;
+    galleryRender.push(`<div class="photo-card">
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
-      <b>Likes${e.likes}</b>
+      <b>Likes${likes}</b>
     </p>
     <p class="info-item">
-      <b>Views${e.views}</b>
+      <b>Views${views}</b>
     </p>
     <p class="info-item">
-      <b>Comments${e.comments}</b>
+      <b>Comments${comments}</b>
     </p>
     <p class="info-item">
-      <b>Downloads${e.downloads}</b>
+      <b>Downloads${downloads}</b>
     </p>
   </div>
 </div>`);
-    });
-    divGallery.innerHTML = galleryRender;
   });
-});
-// $================LISTENER==================
+  divGallery.innerHTML = galleryRender;
+}
