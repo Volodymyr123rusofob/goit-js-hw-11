@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo-card > img {
+  width: 200px;
+}
+
 .load-more {
   display: none;
 }
