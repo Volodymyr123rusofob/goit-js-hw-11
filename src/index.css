@@ -2,12 +2,12 @@
   text-align: center;
 }
 
-.gallery {
+.galleryU {
   display: flex;
   flex-wrap: wrap;
 }
 
-.photo-card > img {
+.photo-card-lin > img {
   width: 200px;
 }
 
