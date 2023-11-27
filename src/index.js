@@ -108,6 +108,8 @@
 // !!!!!!!!!!!!!!!!!
 import { RequestOnColechtion } from './example';
 import { Notify } from 'notiflix';
+import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const ref = {
   btnLoad: document.querySelector('.load-more'),
@@ -142,7 +144,8 @@ formSerch.addEventListener('submit', e => {
         'Sorry, there are no images matching your search query. Please try again.'
       );
     renderImg(arrBek);
-
+    const lightbox = new SimpleLightbox('.gallery a');
+    // lightbox.refresh();
     if (totalImg < 40) {
       btnLoad.style.display = 'none';
       return Notify.info(
@@ -150,7 +153,6 @@ formSerch.addEventListener('submit', e => {
       );
     }
     btnLoad.style.display = 'block';
-    api.updateLightbox();
   });
   e.target[0].value = '';
 });
@@ -167,13 +169,14 @@ btnLoad.addEventListener('click', () => {
         'Sorry, there are no images matching your search query. Please try again.'
       );
     renderImg(arrBek);
-    api.updateLightbox();
+    const lightbox = new SimpleLightbox('.gallery a');
     if (totalImg === totalHits) {
       btnLoad.style.display = 'none';
       return Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
     }
+    gallery.refresh();
   });
 });
 
