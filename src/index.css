@@ -2,13 +2,14 @@
   text-align: center;
 }
 
-.galleryU {
+.gallery {
   display: flex;
   flex-wrap: wrap;
 }
 
 .photo-card-lin > img {
-  width: 200px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .load-more {
