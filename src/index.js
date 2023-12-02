@@ -76,10 +76,10 @@ function render(arr) {
   lightbox.refresh();
 }
 
-function scrollBy() {
+async function scrollBy() {
   number += 1;
   page = number.toString();
-  api.requestColechtion(userValue, page).then(data => {
+  await api.requestColechtion(userValue, page).then(data => {
     const { totalHits } = data;
     const arrBek = data.hits;
     render(arrBek);
