@@ -15,6 +15,7 @@ const lightbox = new SimpleLightbox('.photo-card a');
 let userValue = '';
 let number = 1;
 let totalImg = 0;
+let page = '';
 
 formSerch.addEventListener('submit', inicialRequestColechtio);
 
@@ -38,7 +39,7 @@ function isElementInViewport(el) {
 
 function inicialRequestColechtio(e) {
   e.preventDefault();
-  api.page = '1';
+  page = '1';
   number = 1;
   divGallery.innerHTML = '';
   userValue = e.target[0].value;
@@ -46,7 +47,7 @@ function inicialRequestColechtio(e) {
   if (!userValue || !queryValue)
     return Notify.warning('EThe field must not be empty');
 
-  api.requestColechtion(userValue).then(data => {
+  api.requestColechtion(userValue, page).then(data => {
     const arrBek = data.hits;
     const { totalHits } = data;
     totalImg = arrBek.length;
@@ -77,8 +78,8 @@ function render(arr) {
 
 function scrollBy() {
   number += 1;
-  api.page = number.toString();
-  api.requestNextColechtion(userValue).then(data => {
+  page = number.toString();
+  api.requestColechtion(userValue, page).then(data => {
     const { totalHits } = data;
     const arrBek = data.hits;
     render(arrBek);
